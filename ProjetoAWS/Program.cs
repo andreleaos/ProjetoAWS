@@ -10,16 +10,24 @@ namespace ProjetoAWS
     {
         static void Main(string[] args)
         {
-            ConfigureServices();
+            try
+            {
+                var serviceCollection = ConfigureServices();
+                IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+                var eventService = serviceProvider.GetRequiredService<IAppAWS>();
+                eventService.Execute();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        static void ConfigureServices()
+        static IServiceCollection ConfigureServices()
         {
-            IServiceCollection _serviceCollection = new ServiceCollection();
-            _serviceCollection.AddDependencies();
-            IServiceProvider serviceProvider = _serviceCollection.BuildServiceProvider();
-            var eventService = serviceProvider.GetRequiredService<IAppAWS>();
-            eventService.Execute();
-          }
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddDependencies();
+            return serviceCollection;
+        }
     }
 }
