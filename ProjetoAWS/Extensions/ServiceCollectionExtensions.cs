@@ -11,6 +11,8 @@ using System.Security.Principal;
 using ProjetoAWS.Main;
 using ProjetoAWS.Services.Contracts;
 using ProjetoAWS.Services.Impl;
+using ProjetoAWS.Repositories.Contracts;
+using ProjetoAWS.Repositories.Impl;
 
 namespace ProjetoAWS.Extensions
 {
@@ -34,7 +36,7 @@ namespace ProjetoAWS.Extensions
 
         private static void AddRepositoryDependencies(IServiceCollection services)
         {
-
+            services.AddScoped<IDatabaseRepository, DatabaseRepository>();
         }
 
         private static void AddServicesDependencies(IServiceCollection services)
